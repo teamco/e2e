@@ -1,0 +1,56 @@
+{
+  "name": "e2e-aia-test-framework",
+  "private": true,
+  "version": "1.0.0",
+  "description": "AIA E2E UI Test Framework",
+  "main": "index.js",
+  "scripts": {
+	"selenium-update:proxy": "webdriver-manager --proxy http://genproxy:8080 update --ignore_ssl --gecko=false",
+    "selenium-start": "webdriver-manager start",
+    "e2e": "protractor conf.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },  
+  "engines": {   
+    "node": ">= 9.0"
+  },
+  "keywords": [
+    "AIA",
+    "E2E",
+    "UI",
+    "Test"
+  ],
+  "author": "Vladimir Tkach at Amdocs",
+  "license": "ISC",
+  "dependencies": {
+	"chai": "*",
+    "eslint-plugin-protractor": "^1.41.0",
+    "grunt": "^1.0.3",
+    "grunt-contrib-concat": "*",
+    "grunt-contrib-jshint": "*",
+    "grunt-contrib-watch": "*",
+    "grunt-exec": "*",
+    "grunt-html": "*",
+    "grunt-loadnpmtasks": "*",
+    "grunt-selenium-standalone": "*",
+    "grunt-serve": "*",
+    "protractor": "^5.4.2",
+    "protractor-jasmine2-screenshot-reporter": "*",
+    "selenium-webdriver": "*",
+    "webdriver-manager": "^12.1.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-stage-0": "^6.24.1",
+    "babel-register": "^6.26.0",
+    "chromedriver": "^2.45.0",
+    "html-dnd": "^1.2.0",
+    "jasmine2-custom-message": "^0.9.3",
+    "moment": "^2.23.0",
+    "protractor-beautiful-reporter": "^1.2.7",
+    "protractor-pretty-html-reporter": "0.0.16"
+  }
+}

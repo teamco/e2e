@@ -1,0 +1,35 @@
+{
+  "extends": "umi",
+  "rules": {
+    "dot-location": [
+      "error",
+      "object"
+    ],
+    "no-var": "error",
+    "no-console": [
+      "warn",
+      {
+        "allow": [
+          "warn",
+          "error"
+        ]
+      }
+    ]
+  },
+  "plugins": [
+    "protractor"
+  ],
+  "globals": {
+    "protractor": true,
+    "jasmine": true,
+    "pending": true,
+    "s": true,
+    "c": true,
+    "browser": true,
+    "element": true,
+    "$": true,
+    "$$": true,
+    "by": true,
+    "ExpectedConditions": true
+  }
+}
