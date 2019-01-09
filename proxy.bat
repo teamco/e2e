@@ -10,3 +10,6 @@ npm config set https-proxy %PROXY%
 
 yarn config set proxy %PROXY%
 yarn config set https-proxy %PROXY%
+
+git config --global http.proxy %PROXY%
+git config --global https.proxy %PROXY%

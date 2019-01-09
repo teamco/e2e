@@ -13,3 +13,4 @@ npm-debug.log*
 *.orig
 /.idea
 debug.log
+yarn.lock

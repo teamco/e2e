@@ -5,6 +5,8 @@
   "description": "AIA E2E UI Test Framework",
   "main": "index.js",
   "scripts": {
+	"preinstall": "node -e \"if(process.env.npm_execpath.indexOf('yarn') === -1) throw new Error('You must use Yarn to install, not NPM')\"",
+	"postinstall": "",
     "webdriver-install": "npm i -g webdriver-manager",
     "protractor-install": "npm i -g protractor",
     "selenium-update:proxy": "webdriver-manager --proxy http://genproxy:8080 update --ignore_ssl --gecko=false",
@@ -40,7 +42,9 @@
     "grunt-selenium-standalone": "*",
     "grunt-serve": "*",
     "protractor-jasmine2-screenshot-reporter": "*",
-    "selenium-webdriver": "*"
+    "selenium-webdriver": "*",
+	"colors": "^1.1.2",
+    "ps-list": "^3.1.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
