@@ -15,7 +15,6 @@ const protocol = 'http';
  * @constant remoteHost
  * @type {string}
  */
-  //const remoteHost = 'ilvbdsi900';
 const remoteHost = 'localhost';
 
 /**
@@ -34,7 +33,7 @@ const port = 9333;
  * @constant targetPath
  * @type {string}
  */
-const targetPath = remoteHost === localHost ? '' : '/amdocs-digital-intelligence/';
+const targetPath = remoteHost === localHost ? '' : '';
 
 /**
  * Base url
@@ -48,13 +47,6 @@ const PrettyReporter = require('protractor-pretty-html-reporter').Reporter;
 
 const path = require('path');
 const fs = require('fs');
-
-/**
- * @constant
- * @type {Services}
- */
-
-// const s = require('./services/main');
 
 /**
  * @method _updateConfig
