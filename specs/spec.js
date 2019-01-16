@@ -11,5 +11,5 @@ const services = require('../services/main');
 global.s = services.e2e;
 
 describe('E2E tests', () => {
-  require('./general/spec');
+  require('./general/general.spec');
 });
