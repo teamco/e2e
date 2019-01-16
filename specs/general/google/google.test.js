@@ -1,11 +1,9 @@
-/**
- * Created by Tkachv on 5/17/2017.
- */
+import {doSearch, navigateTo, searchFor, setLanguage} from './helper';
 
-const services = require('../../services/main');
+const services = require('../../../services/main');
 global.s = services.e2e;
 
-describe('General', () => {
+describe('Google search', () => {
 
   global.s.preConfig({
     beforeAll() {
@@ -22,5 +20,8 @@ describe('General', () => {
     }
   });
 
-  require('./google/google.test');
+  navigateTo('https://www.google.com', 'Google');
+  setLanguage('English');
+  searchFor('ReactJS');
+  doSearch();
 });

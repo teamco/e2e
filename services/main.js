@@ -1,5 +1,7 @@
 /*jshint esversion: 6 */
 
+import {by, element} from 'protractor';
+
 const protractor = require('protractor');
 const since = require('jasmine2-custom-message');
 const EC = protractor.ExpectedConditions;
@@ -77,14 +79,12 @@ const Services = function(elementFinder) {
        * //   });
        */
       global.c = this;
+      that.browser.maximize();
+      that.browser.deleteAllCookies();
+      that.browser.disableSynchronization();
 
       _asyncDone(done, 'beforeAll');
-      that.login.doLogin(that.login.TYPE.positive.name).then(async () => {
-        await that.branch.handleBranch('later');
-        //await that.branch.handleBranch('delete');
-        await that.branch.handleBranch('new');
-        await _executeFn(fn);
-      });
+      _executeFn(fn);
     });
   };
 
@@ -121,13 +121,9 @@ const Services = function(elementFinder) {
    * @param fn
    */
   this.afterAll = fn => {
-    const that = this;
     afterAll(function(done) {
       global.c = this;
       _asyncDone(done, 'afterAll');
-      that.login.doLogout().
-      then(() => _executeFn(fn)).
-      then(() => global.c = null);
     });
   };
 
@@ -271,8 +267,7 @@ const Services = function(elementFinder) {
     }
 
     if (!opts) {
-      browser.driver.executeScript(_removeCursor);
-      return false;
+      return browser.driver.executeScript(_removeCursor);
     }
 
     return browser.driver.executeScript(_addCursor, opts.x, opts.y, opts.container);
@@ -369,109 +364,19 @@ const Services = function(elementFinder) {
    * @property Services
    * @type {Browser}
    */
-  this.browser = require('./browser.js');
+  this.browser = require('./browser');
 
   /**
    * @property Services
    * @type {Button}
    */
-  this.button = require('./button.js');
-
-  /**
-   * @property Services
-   * @type {Canvas}
-   */
-  this.canvas = require('./canvas.js');
-
-  /**
-   * @property Services
-   * @type {Grid}
-   */
-  this.grid = require('./grid.js');
-
-  /**
-   * @property Services
-   * @type {KendoGrid}
-   */
-  this.kendoGrid = require('./kendoGrid.js');
-
-  /**
-   * @property Services
-   * @type {Grid}
-   */
-  this.navigation = require('./navigation.js');
+  this.button = require('./button');
 
   /**
    * @property Services
    * @type {Input}
    */
-  this.input = require('./input.js');
-
-  /**
-   * @property Services
-   * @type {Login}
-   */
-  this.login = require('./login.js');
-
-  /**
-   * @property Services
-   * @type {Selectors}
-   */
-  this.selectors = require('./selectors.js');
-
-  /**
-   * @property Services
-   * @type {Branch}
-   */
-  this.branch = require('./branch');
-
-  /**
-   * @property Services
-   * @type {Checkbox}
-   */
-  this.checkbox = require('./checkbox.js');
-
-  /**
-   * @property Services
-   * @type {Header}
-   */
-  this.header = require('./header.js');
-
-  /**
-   * @property Services
-   * @type {ActivityBar}
-   */
-  this.activityBar = require('./activity.bar.js');
-
-  /**
-   * @property Services
-   * @type {Form}
-   */
-  this.form = require('./form.js');
-
-  /**
-   * @property Services
-   * @type {Upload}
-   */
-  this.upload = require('./upload.js');
-
-  /**
-   * @property Services
-   * @type {Select}
-   */
-  this.select = require('./select.js');
-
-  /**
-   * @property Services
-   * @type {Tagset}
-   */
-  this.tagset = require('./tagset.js');
-
-  /**
-   * @property Services
-   * @type {Collapse}
-   */
-  this.collapse = require('./collapse.js');
+  this.input = require('./input');
 
   /**
    * DEFAULT_TIMEOUT
@@ -503,10 +408,6 @@ const Services = function(elementFinder) {
    */
   this.getElementInsideOfBy = (cssValue, searchIn, type) => {
     type = type ? type : 'Presence';
-    // const $element = searchIn.$$(cssValue).first();
-    // const $locator = $element.locator();
-    // console.log(">>>>>", $locator.using, "\n>>>>", $locator.value, "\n>>>", cssValue, "\n>>", searchIn.locator().value);
-
     return this['waitFor' + type](searchIn.$$(cssValue).first());
   };
 
@@ -1035,38 +936,6 @@ const Services = function(elementFinder) {
   };
 
   /**
-   * handleModalDialog
-   * @method Services.handleModalDialog
-   * @property Services
-   * @param {string} type
-   * @param {function} [callback]
-   */
-  this.handleModalDialog = (type, callback) =>
-    this.selectors.modalDialog().then($modal =>
-      this.selectors.modalBody($modal).then($body => {
-        this.shouldClassName($body, type, true);
-        this.selectors.modalOkButton($modal).then($ok =>
-          this.button.press($ok, () =>
-            this.waitForInvisibility($modal).then(() =>
-              this.executeCallback(callback))));
-      }));
-
-  /**
-   * handleToastError
-   * @method Services.handleToastError
-   * @property Services
-   * @param {function} [callback]
-   * @param {function} [fallback]
-   */
-  this.handleToastError = (callback, fallback) =>
-    this.selectors.toast().then($toast =>
-      $toast.isPresent().then(present => {
-        present ?
-          this.executeCallback(fallback) :
-          this.executeCallback(callback);
-      }));
-
-  /**
    * defaultContent
    * @method Services.defaultContent
    * @property Services
@@ -1135,19 +1004,6 @@ const Services = function(elementFinder) {
   this.isDisabled = async $el => {
     const res = await $el.getAttribute('disabled');
     return res === 'true';
-  };
-
-  /**
-   * @property Services
-   * @method Services.navigateTo
-   * @param {string} menuName
-   * @param {string} path
-   */
-  this.navigateTo = (menuName, path) => {
-    const parentMenuName = menuName;
-    const s = this;
-    describe(`Navigate to the target: ${parentMenuName}/${path}`,
-      async () => await s.navigation.navigateValidator(parentMenuName, path));
   };
 };
 

@@ -13,6 +13,7 @@ const services = require('./main.js');
  * @constructor
  */
 const Input = function() {
+
   /**
    * isDisabled
    * @method Input.isDisabled

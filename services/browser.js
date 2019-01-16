@@ -224,23 +224,6 @@ const Browser = function() {
     this.mouseMove($locator).then(() => this.mouseClick('left').then(() => s.e2e.executeCallback(callback)));
 
   /**
-   * setEdtiorValue
-   * @method Browser.setEdtiorValue
-   * @property Browser
-   * @param value
-   */
-
-  this.setEditorValue = value => browser.executeScript(`this.monaco.editor.getModels()[0].setValue("${value}")`);
-
-  /**
-   * getEditorMarkers
-   * @method Browser.getEditorMarkers
-   * @property Browser
-   */
-
-  this.getEditorMarkers = () => browser.executeScript(`return this.monaco.editor.getModelMarkers()`);
-
-  /**
    * scrollToElement
    * @method Browser.scrollToElement
    * @property Browser
@@ -410,32 +393,6 @@ const Browser = function() {
     const remote = require('selenium-webdriver/remote');
     browser.driver.setFileDetector(new remote.FileDetector());
   };
-
-  /**
-   *
-   * @param uploadMessage
-   * @returns {Promise<void>}
-   */
-  this.getSuccsessMessage = async (uploadMessage) => {
-    const $message = await s.e2e.getElementBy('css', 'div.ant-message-success', 'Displayed');
-    expect($message.getText()).toEqual(uploadMessage);
-  };
-
-  /**
-   *
-   * @param uploadMessage
-   * @returns {Promise<void>}
-   */
-  this.getErrorMessage = async (uploadMessage) => {
-    const $message = await s.e2e.getElementBy('css', 'div.ant-message-error', 'Displayed');
-    expect($message.getText()).toEqual(uploadMessage);
-  };
-
-  this.getNotificationMessage = async (uploadMessage) => {
-    const $message = await s.e2e.getElementBy('css', 'div.ant-notification-notice-message', 'Displayed');
-    expect($message.getText()).toEqual(uploadMessage);
-  };
-
 };
 
 module.exports = new Browser();
