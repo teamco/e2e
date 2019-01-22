@@ -149,6 +149,16 @@ const Browser = function() {
   this.validateTitle = (pathname, titleName) => this.getTitle(pathname).then(title => expect(title).toEqual(titleName));
 
   /**
+   * matchTitle
+   * @method matchTitle
+   * @property Browser
+   * @param {string} pathname
+   * @param {string} titleName
+   * @returns {promise.Promise<void>|promise.Thenable}
+   */
+  this.matchTitle = (pathname, titleName) => this.getTitle(pathname).then(title => expect(title).toMatch(titleName));
+
+  /**
    * doubleClick
    * @property Browser
    * @param $locator

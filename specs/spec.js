@@ -14,16 +14,16 @@ describe('E2E tests', () => {
 
   global.s.preConfig({
     beforeAll() {
-      // TODO (Tkachv): Dom something
+      // TODO (Tkachv): Do something
     },
     beforeEach() {
-      // TODO (Tkachv): Dom something
+      // TODO (Tkachv): Do something
     },
     afterAll() {
-      // TODO (Tkachv): Dom something
+      // TODO (Tkachv): Do something
     },
     afterEach() {
-      // TODO (Tkachv): Dom something
+      // TODO (Tkachv): Do something
     }
   });
 

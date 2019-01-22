@@ -12,7 +12,7 @@
     "selenium-start": "./node_modules/.bin/webdriver-manager start",
     "e2e": "./node_modules/.bin/protractor conf.js",
     "e2e-headless": "./node_modules/.bin/protractor conf.js --params.headless=true",
-    "e2e-url": "./node_modules/.bin/protractor conf.js --params.url=https://www.google.com",
+    "e2e-url": "./node_modules/.bin/protractor conf.js --params.url=https://localhost:3000",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "engines": {
