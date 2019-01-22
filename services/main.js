@@ -389,6 +389,8 @@ const Services = function(elementFinder) {
    * @param {string} locateBy
    * @param {string} value
    * @param {string} [type]
+   * @example
+   * const $input = await s.getElementBy('css', 'input[aria-label="Search"]');
    */
   this.getElementBy = (locateBy, value, type) => {
     const $element = element(by[locateBy](value));
@@ -403,6 +405,9 @@ const Services = function(elementFinder) {
    * @param {string} cssValue
    * @param searchIn
    * @param {string} [type]
+   * @example
+   * const $modal = await s.getElementBy('css', '.ant-modal-body', 'Displayed');
+   * const $input = s.getElementInsideOfBy('input[type="text"]', $modal);
    */
   this.getElementInsideOfBy = (cssValue, searchIn, type) => {
     type = type ? type : 'Presence';
@@ -414,6 +419,8 @@ const Services = function(elementFinder) {
    * @property Services
    * @param {string} cssValue
    * @param [searchIn]
+   * @example
+   * const $span = await s.getElementsInsideOfBy('span', $cell)
    */
   this.getElementsInsideOfBy = (cssValue, searchIn) => searchIn ? searchIn.$$(cssValue) : $$(cssValue);
 
@@ -424,6 +431,8 @@ const Services = function(elementFinder) {
    * @param value
    * @param [searchIn]
    * @returns {ElementArrayFinder}
+   * @example
+   * const $instances = await s.getElementsBy('css', 'div[class*="recharts-legend-wrapper"] > ul > li');
    */
   this.getElementsBy = (type, value, searchIn) => (searchIn || element).all(by[type](value));
 
@@ -470,6 +479,8 @@ const Services = function(elementFinder) {
    * @param {string} text
    * @param {string} [type]
    * @returns {*}
+   * @example
+   * const $ok = await s.getElementByText('.ant-modal-footer button', 'OK');
    */
   this.getElementByText = (cssValue, text, type) =>
       this['waitFor' + (type ? type : 'Presence')](element(by.cssContainingText(cssValue, text)));
@@ -527,6 +538,9 @@ const Services = function(elementFinder) {
    * @property Services
    * @method Services.getParentElement
    * @param $locator
+   * @example
+   * const $input = await s.getElementInsideOfBy(CLASS_NAMES.ATTRIBUTE_NAME, $modal);
+   * const $inputContainer = await s.getParentElement($input);
    */
   this.getParentElement = $locator => $locator.element(by.xpath('..'));
 
@@ -568,6 +582,10 @@ const Services = function(elementFinder) {
    * @param {boolean} [previous]
    * @param {string|*} [type]
    * @returns {ElementFinder|*}
+   * @example
+   * // Get sibling with an error message
+   * const $errorContainer = await s.getSibling($inputContainer, 'div', false, 'Presence');
+   * await s.waitForDisplayed($errorContainer);
    */
   this.getSibling = ($locator, tagName, previous, type) => {
     const sibling = previous ? 'preceding' : 'following';
@@ -580,6 +598,16 @@ const Services = function(elementFinder) {
    * @param $locator
    * @param {string} [type]
    * @returns {promise.Promise<R>|*}
+   * @example
+   * const $feedEntities = await s.getElementsInsideOfBy('.ant-collapse-content-box > div', $selectedItem);
+   * expect($feedEntities.length).toBeGreaterThan(0);
+   * const $selectedFeedEntity = $feedEntities[0];
+   * selectedFeedEntityLabel = await $selectedFeedEntity.getText();
+   * await s.button.press($selectedFeedEntity);
+   * await s.waitForLocalLoader();
+   * // Verify entity is selected
+   * const classNames = await s.getClassNames($selectedFeedEntity);
+   * expect(classNames.indexOf('feedEntitySelected')).toBeGreaterThan(-1);
    */
   this.getClassNames = ($locator, type) =>
       this['waitFor' + (type ? type : 'Presence')]($locator).then(() => $locator.getAttribute('class'));
@@ -610,6 +638,9 @@ const Services = function(elementFinder) {
    * @param {string} className
    * @param {boolean} condition
    * @returns {*}
+   * @example
+   * // check row is not hovered
+   * await s.shouldMatchToClassName($row, ELEMENT_CLASSES.HOVER, false);
    */
   this.shouldMatchToClassName = ($locator, className, condition) => {
     const regExp = new RegExp(className);
@@ -624,6 +655,10 @@ const Services = function(elementFinder) {
    * @param $locator
    * @param {string} className
    * @returns {Promise<boolean>}
+   * @example
+   * const $label = await s.getElementBy('css', CLASS_NAMES.UPDATE_POLICY_ON_DEMAND);
+   * const isChecked = await s.hasClassName($label, 'ant-radio-wrapper-checked');
+   * expect(isChecked).toBeTruthy();
    */
   this.hasClassName = async ($locator, className) => {
     const classNames = (await this.getClassNames($locator)).split(' ');
@@ -768,22 +803,6 @@ const Services = function(elementFinder) {
   };
 
   /**
-   * waitForGlobalLoader
-   * @method Services.waitForGlobalLoader
-   * @property Services
-   * @returns {promise.Promise<R>|*}
-   */
-  this.waitForGlobalLoader = () => this.selectors.globalLoader(true).then(() => this.selectors.globalLoader(false));
-
-  /**
-   * waitForLocalLoader
-   * @method Services.waitForLocalLoader
-   * @property Services
-   * @returns {promise.Promise<R>|*}
-   */
-  this.waitForLocalLoader = () => this.selectors.localLoader(true).then(() => this.selectors.localLoader(false));
-
-  /**
    * waitForNone - stub that doesnt wait
    * @method Services.waitForNone
    */
@@ -880,6 +899,9 @@ const Services = function(elementFinder) {
    * @param $locator
    * @param  [timeout]
    * @returns {*}
+   * @example
+   * const $errorContainer = await s.getSibling($inputContainer, 'div', false, 'Presence');
+   * await s.waitForDisplayed($errorContainer);
    */
   this.waitForDisplayed = ($locator, timeout) =>
       this.waitForPresence($locator, timeout).then(() => {
@@ -943,6 +965,11 @@ const Services = function(elementFinder) {
    * activeElement
    * @method Services.activeElement
    * @property Services
+   * @example
+   * it('Browser resize affect toggle navigation tabs', () => s.browser.setSize(600, 600).then(() => {
+   *    s.activeElement().then(() => s.selectors.antMenuPopOverButton().then($antMenu => s.button.press($antMenu)));
+   *    s.browser.setSize(1300, 600).then(() => s.activeElement().then(() => s.header.isVisibleNavigationMenu(true)));
+   * }));
    */
   this.activeElement = () => browser.switchTo().activeElement();
 
@@ -989,6 +1016,9 @@ const Services = function(elementFinder) {
    * @property Services
    * @method Services.getVisibleTooltip
    * @returns {Promise<void>}
+   * @example
+   * // Get Tooltip
+   * const $toolTip = await s.getVisibleTooltip();
    */
   this.getVisibleTooltip = async () => await this.getElementBy('css', 'div.ant-tooltip:not(.ant-tooltip-hidden)');
 
@@ -997,6 +1027,8 @@ const Services = function(elementFinder) {
    * @method Services.isDisabled
    * @param {ElementFinder} $el
    * @returns {Promise<boolean>}
+   * @example
+   * const isDisabledAfter = await s.isDisabled($addBtn);
    */
   this.isDisabled = async $el => {
     const res = await $el.getAttribute('disabled');

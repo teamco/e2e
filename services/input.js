@@ -31,6 +31,10 @@ const Input = function() {
    * @param $locator
    * @param value
    * @returns {Promise<R>}
+   * @example
+   * const $input = s.getElementInsideOfBy('input[type="text"]', $modal);
+   * const timestamp = +(new Date());
+   * await s.input.updateValue($input, `Name-${timestamp}`);
    */
   this.updateValue = ($locator, value) =>
     $locator.then(() => {
@@ -69,6 +73,9 @@ const Input = function() {
    * @param $locator
    * @param value
    * @returns {Promise<R>}
+   * @example
+   * const $input = await s.getElementInsideOfBy('.ant-input', $appender);
+   * await s.input.setValue($input, newData.tags[0]);
    */
   this.setValue = async ($locator, value) => {
     await this.verifySetValue($locator);

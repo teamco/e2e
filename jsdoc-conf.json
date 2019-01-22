@@ -15,7 +15,7 @@
     "name": "AIA E2E Test framework",
     "footerText": "Version 1.0.0",
     "logo": {
-      "link": "https://github.com/Grafluxe/boxy-jsdoc-template"
+      "link": "https://github.com/clenemt/docdash"
     }
   },
   "opts": {
@@ -23,7 +23,7 @@
     "private": true,
     "recurse": true,
     "package": "package.json",
-    "template": "./node_modules/boxy-jsdoc-template",
+    "template": "./node_modules/docdash",
     "destination": "./docs/"
   },
   "source": {

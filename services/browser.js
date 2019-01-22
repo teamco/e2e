@@ -25,6 +25,11 @@ const Browser = function() {
    * @property Browser
    * @param {number} x
    * @param {number} y
+   * @example
+   * it('Browser resize affect toggle navigation tabs', () => s.browser.setSize(600, 600).then(() => {
+   *    s.activeElement().then(() => s.selectors.antMenuPopOverButton().then($antMenu => s.button.press($antMenu)));
+   *    s.browser.setSize(1300, 600).then(() => s.activeElement().then(() => s.header.isVisibleNavigationMenu(true)));
+   * }));
    */
   this.setSize = (x, y) => browser.driver.manage().window().setSize(x, y);
 
@@ -70,6 +75,8 @@ const Browser = function() {
    * @property Browser
    * @param {number} [timer]
    * @returns {*|!promise.Thenable.<void>|!webdriver.promise.Promise.<void>|promise.Promise<void>}
+   * @example
+   * await s.browser.wait(500);
    */
   this.wait = timer => browser.sleep(timer || 3000);
 
@@ -81,10 +88,13 @@ const Browser = function() {
   this.getAction = () => browser.actions();
 
   /**
-    * @method clickSimulation
-    * @param $locator
-    * @returns {Promise<void>}
-    */
+   * @method clickSimulation
+   * @param $locator
+   * @returns {Promise<void>}
+   * @example
+   * const $createButton = await s.getElementBy('css', '._t_create');
+   * await s.browser.clickSimulation($createButton);
+   */
   this.clickSimulation = async $locator => {
     this.scrollToElement($locator);
     await s.e2e.waitForDisplayed($locator);
@@ -143,6 +153,10 @@ const Browser = function() {
    * @property Browser
    * @param $locator
    * @returns {promise.Thenable}
+   * @example
+   * const $pictureExternalTitle = await s.getElementBy('css', '.ant-card-body div[class*="titleAdaptive__"]');
+   * expect($pictureExternalTitle).toBeDefined();
+   * s.browser.doubleClick($pictureExternalTitle);
    */
   this.doubleClick = $locator => this.doAction('doubleClick', $locator);
 
@@ -164,6 +178,9 @@ const Browser = function() {
    * @param $locator
    * @param {*|boolean} [perform]
    * @returns {promise.Promise<void>|promise.Thenable}
+   * @example
+   * const $tag = await s.selectors.getCardTag($card);
+   * await s.browser.mouseMove($tag);
    */
   this.mouseMove = ($locator, perform) => this.doAction('mouseMove', $locator, perform);
 
@@ -219,6 +236,10 @@ const Browser = function() {
    * @property Browser
    * @param $locator
    * @param callback
+   * @example
+   * const $pictureExternalTitle = await s.getElementBy('css', '.ant-card-body div[class*="titlePredictive__"]');
+   * expect($pictureExternalTitle).toBeDefined();
+   * s.browser.clickOnElement($pictureExternalTitle);
    */
   this.clickOnElement = ($locator, callback) =>
     this.mouseMove($locator).then(() => this.mouseClick('left').then(() => s.e2e.executeCallback(callback)));
@@ -229,6 +250,8 @@ const Browser = function() {
    * @property Browser
    * @param $locator
    * @returns {promise.Promise<void>}
+   * @example
+   * await s.browser.scrollToElement($locator);
    */
   this.scrollToElement = $locator => browser.executeScript('arguments[0].scrollIntoView();',
     $locator.getWebElement()).then(() => s.e2e.waitForDisplayed($locator));
@@ -240,6 +263,9 @@ const Browser = function() {
    * @param $locator
    * @param {number} [scrollTo]
    * @returns {promise.Promise<void>}
+   * @example
+   * const $tabMonitoring = await s.getElementBy('css', CLASS_NAMES.ML_TAB_MONITORING, 'Clickable');
+   * await s.browser.scrollElement($tabMonitoring);
    */
   this.scrollElement = ($locator, scrollTo) => browser.executeScript('arguments[0].scrollTop=arguments[1];',
     $locator.getWebElement(), scrollTo || 0);

@@ -21,6 +21,9 @@ const Button = function() {
    * @param $locator
    * @param {function} [callback]
    * @returns {!Thenable<R>}
+   * @example
+   * const $import = await s.getElementBy('css', '.anticon-file-add');
+   * await s.button.press($import);
    */
   this.press = ($locator, callback) =>
       s.e2e.waitForClickable($locator).then(() =>
