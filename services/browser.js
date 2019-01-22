@@ -249,7 +249,7 @@ const Browser = function() {
    * @method Browser.canvasDragNDrop
    * @property Browser
    * @param $locator
-   * @param {{[fromX]: number, [fromY]: number, [toX]: number, [toY]: number}} [opts]
+   * @param {*} [opts]
    * @returns {promise.Promise<void>}
    */
   this.canvasDragNDrop = ($locator, opts) => {
@@ -271,7 +271,7 @@ const Browser = function() {
    * @method Browser.canvasDblClick
    * @property Browser
    * @param $locator
-   * @param {{[fromX]: number, [fromY]: number}} [opts]
+   * @param {*} [opts]
    * @returns {promise.Promise<void>}
    */
   this.canvasDblClick = ($locator, opts) => {

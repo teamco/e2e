@@ -17,7 +17,7 @@ const ElementFinder = $('').constructor;
 ElementFinder.prototype.getAttributes = function() {
   const $locator = this.getWebElement();
   return browser.executeScript(
-    `var items = {}; 
+      `var items = {}; 
      for (var index = 0; index < arguments[0].attributes.length; ++index) { 
          items[arguments[0].attributes[index].name] = arguments[0].attributes[index].value; 
      } 
@@ -70,15 +70,13 @@ const Services = function(elementFinder) {
 
       /**
        * <c> - Context.
-       * @global global <this> scope
-       * @property global
        * @example
        * //   beforeAll(function() {
        * //     c = this;
        * //     c[<namespace>] = {<structure>};
        * //   });
        */
-      global.c = this;
+      global['c'] = this;
       that.browser.maximize();
       that.browser.deleteAllCookies();
       that.browser.disableSynchronization();
@@ -207,11 +205,11 @@ const Services = function(elementFinder) {
        * @type {promise.Promise.<T>}
        */
       const script = browser.driver.executeScript(
-        'arguments[0].style.boxShadow="";' +
-        'arguments[0].setAttribute(\'style\', arguments[1]);',
-        $locator.getWebElement(),
-        style + ';box-shadow:inset 0 0 0 2px ' + color +
-        ',0 0 0 2px ' + color + ';'
+          'arguments[0].style.boxShadow="";' +
+          'arguments[0].setAttribute(\'style\', arguments[1]);',
+          $locator.getWebElement(),
+          style + ';box-shadow:inset 0 0 0 2px ' + color +
+          ',0 0 0 2px ' + color + ';'
       );
 
       return script.then(() => {
@@ -322,9 +320,9 @@ const Services = function(elementFinder) {
     }
 
     return $locator.getLocation().then(location =>
-      browser.executeScript(_tracker, location, type,
-        typeof remove === 'undefined' ? true : remove,
-        this.generateColor()));
+        browser.executeScript(_tracker, location, type,
+            typeof remove === 'undefined' ? true : remove,
+            this.generateColor()));
   };
 
   /**
@@ -474,7 +472,7 @@ const Services = function(elementFinder) {
    * @returns {*}
    */
   this.getElementByText = (cssValue, text, type) =>
-    this['waitFor' + (type ? type : 'Presence')](element(by.cssContainingText(cssValue, text)));
+      this['waitFor' + (type ? type : 'Presence')](element(by.cssContainingText(cssValue, text)));
 
   /**
    * getElementByTextInsideOf
@@ -489,7 +487,7 @@ const Services = function(elementFinder) {
   this.getElementByTextInsideOf = (cssValue, text, searchIn, type) => {
     type = type ? type : 'Presence';
     return this['waitFor' + type](
-      searchIn.element(by.cssContainingText(cssValue, text)));
+        searchIn.element(by.cssContainingText(cssValue, text)));
   };
 
   /**
@@ -505,7 +503,7 @@ const Services = function(elementFinder) {
    * @param $locators
    * @param {number} [index]
    * @param {string} [type]
-   * @returns {!Thenable.<T>|!(promise.Thenable.<T>|WebElementPromise)|*}
+   * @returns {*}
    */
   this.getNtnFirstElement = ($locators, index, type) => {
     index = typeof index === 'undefined' ? 0 : index;
@@ -518,7 +516,7 @@ const Services = function(elementFinder) {
    * @property Services
    * @param $locators
    * @param {number} [index]
-   * @returns {!Thenable.<T>|!(promise.Thenable.<T>|WebElementPromise)|*}
+   * @returns {*}
    */
   this.getNtnLastElement = ($locators, index) => this.getCount($locators).then(count => {
     index = typeof index === 'undefined' ? 0 : index;
@@ -539,28 +537,28 @@ const Services = function(elementFinder) {
    * @param {string} condition
    * @param expected
    * @param callback
-   * @returns {*|Promise.<TResult>|!Thenable.<R>}
+   * @returns {*}
    */
   this.checkCount = ($locators, condition, expected, callback) =>
-    this.getCount($locators).then(count => {
-      let isNegative = !!condition.match(/!/);
-      condition = _getCondition(condition);
-      const expectation = expect(count);
-      isNegative ?
-        expectation.not[condition](expected) :
-        expectation[condition](expected);
-      return this.executeCallback(callback, count);
-    });
+      this.getCount($locators).then(count => {
+        let isNegative = !!condition.match(/!/);
+        condition = _getCondition(condition);
+        const expectation = expect(count);
+        isNegative ?
+            expectation.not[condition](expected) :
+            expectation[condition](expected);
+        return this.executeCallback(callback, count);
+      });
 
   /**
    * getElementByIndex
    * @property Services
    * @param $locators
    * @param index
-   * @returns {*|Promise.<TResult>|!Thenable.<R>}
+   * @returns {*}
    */
   this.getElementByIndex = ($locators, index) =>
-    this.browser.wait().then(() => this.checkCount($locators, '!<', index, () => $locators.get(index)));
+      this.browser.wait().then(() => this.checkCount($locators, '!<', index, () => $locators.get(index)));
 
   /**
    * getSibling
@@ -584,7 +582,7 @@ const Services = function(elementFinder) {
    * @returns {promise.Promise<R>|*}
    */
   this.getClassNames = ($locator, type) =>
-    this['waitFor' + (type ? type : 'Presence')]($locator).then(() => $locator.getAttribute('class'));
+      this['waitFor' + (type ? type : 'Presence')]($locator).then(() => $locator.getAttribute('class'));
 
   /**
    * shouldClassName
@@ -597,12 +595,12 @@ const Services = function(elementFinder) {
    * @returns {*}
    */
   this.shouldClassName = ($locator, className, condition, text) =>
-    this.getClassNames($locator).then(css => {
-      if (text) {
-        since(`>>> Should${condition ? `` : `n't`} ClassName: ${className} in ${text}`);
-      }
-      condition ? expect(css).toMatch(className) : expect(css).not.toMatch(className);
-    });
+      this.getClassNames($locator).then(css => {
+        if (text) {
+          since(`>>> Should${condition ? `` : `n't`} ClassName: ${className} in ${text}`);
+        }
+        condition ? expect(css).toMatch(className) : expect(css).not.toMatch(className);
+      });
 
   /**
    * shouldMatchToClassName
@@ -616,7 +614,7 @@ const Services = function(elementFinder) {
   this.shouldMatchToClassName = ($locator, className, condition) => {
     const regExp = new RegExp(className);
     return this.getClassNames($locator).then(css =>
-      condition ? expect(css).toMatch(regExp) : expect(css).not.toMatch(regExp));
+        condition ? expect(css).toMatch(regExp) : expect(css).not.toMatch(regExp));
   };
 
   /**
@@ -644,9 +642,9 @@ const Services = function(elementFinder) {
    * @returns {Promise<*|promise.Promise<any>|!Thenable<T>|promise.Thenable<T>|WebElementPromise|"ok"|"not-equal"|"timed-out">}
    */
   this.waitForAttr = async ($locator, attrName, detectState, timeout = this.DEFAULT_TIMEOUT) =>
-    browser.wait(
-      async () => $locator.getAttribute(attrName).then(_ => detectState(_ || '')),
-      timeout);
+      browser.wait(
+          async () => $locator.getAttribute(attrName).then(_ => detectState(_ || '')),
+          timeout);
 
   /**
    * Waits while $locator receives expected state for class attribute
@@ -659,7 +657,7 @@ const Services = function(elementFinder) {
    * @returns {Promise<*|promise.Promise<any>|!Thenable<T>|promise.Thenable<T>|WebElementPromise|"ok"|"not-equal"|"timed-out">}
    */
   this.waitForClassAttr = async ($locator, detectState, timeout = this.DEFAULT_TIMEOUT) =>
-    this.waitForAttr($locator, 'class', detectState, timeout);
+      this.waitForAttr($locator, 'class', detectState, timeout);
 
   /**
    * Waits while $locator receives expected state for inner text
@@ -672,7 +670,7 @@ const Services = function(elementFinder) {
    * @returns {Promise<*|promise.Promise<any>|!Thenable<T>|promise.Thenable<T>|WebElementPromise|"ok"|"not-equal"|"timed-out">}
    */
   this.waitForText = async ($locator, detectState, timeout = this.DEFAULT_TIMEOUT) =>
-    browser.wait(async () => $locator.getText().then(_ => detectState(_.trim() || '')), timeout);
+      browser.wait(async () => $locator.getText().then(_ => detectState(_.trim() || '')), timeout);
 
   /**
    * builds value comparator that verifies that text value is in expected state according to other params
@@ -684,8 +682,8 @@ const Services = function(elementFinder) {
    * @returns {function(string):boolean}
    */
   this.getTextDetector = (desiredValue, {present = true, exact = true} = {}) =>
-    value => // todo: case insensitive
-      (!!present) === (exact ? value === desiredValue : value.indexOf(desiredValue) !== -1);
+      value => // todo: case insensitive
+          (!!present) === (exact ? value === desiredValue : value.indexOf(desiredValue) !== -1);
 
   /**
    * builds value comparator that verifies that attribute value is in expected state according to other params
@@ -697,8 +695,8 @@ const Services = function(elementFinder) {
    * @returns {function(string):boolean}
    */
   this.getAttrDetector = (desiredValue, {present = true, exact = true} = {}) =>
-    value =>
-      (!!present) === (exact ? value === desiredValue : value.indexOf(desiredValue) !== -1);
+      value =>
+          (!!present) === (exact ? value === desiredValue : value.indexOf(desiredValue) !== -1);
 
   /**
    * builds value comparator that verifies that class attribute value is in expected state according to other params
@@ -710,8 +708,8 @@ const Services = function(elementFinder) {
    * @returns {function(string):boolean}
    */
   this.getClassNameDetector = (desiredValue, {present = true, exact = true} = {}) =>
-    attrValue =>
-      (!!present) === ((exact ? attrValue.split(' ') : attrValue).indexOf(desiredValue) !== -1);
+      attrValue =>
+          (!!present) === ((exact ? attrValue.split(' ') : attrValue).indexOf(desiredValue) !== -1);
 
   /**
    * waits while $locator receives expected class state
@@ -725,8 +723,8 @@ const Services = function(elementFinder) {
    * @returns {Promise<*|promise.Promise<any>|!Thenable<T>|promise.Thenable<T>|WebElementPromise|string>}
    */
   this.waitForClass =
-    async ($locator, desiredClass, {present = true, exact = true, timeout = this.DEFAULT_TIMEOUT} = {}) =>
-      this.waitForClassAttr($locator, this.getClassNameDetector(desiredClass, {present, exact}), timeout);
+      async ($locator, desiredClass, {present = true, exact = true, timeout = this.DEFAULT_TIMEOUT} = {}) =>
+          this.waitForClassAttr($locator, this.getClassNameDetector(desiredClass, {present, exact}), timeout);
 
   /**
    * validateText
@@ -737,8 +735,8 @@ const Services = function(elementFinder) {
    * @returns {promise.Promise<R>|*}
    */
   this.validateText = ($locator, source) =>
-    this.waitForPresence($locator).then(() => $locator.getText().then(target =>
-      expect(target.toLowerCase()).toEqual(source.toLowerCase())));
+      this.waitForPresence($locator).then(() => $locator.getText().then(target =>
+          expect(target.toLowerCase()).toEqual(source.toLowerCase())));
 
   /**
    * forEachBreakOn
@@ -811,8 +809,8 @@ const Services = function(elementFinder) {
     return browser.wait(waitOn, timeout).then(condition => {
       expect(condition).toBeTruthy();
       return $locator.getAttribute(attrName).then(value => _not ?
-        !value || (value && value.indexOf(attrValue) < 0) :
-        value && value.indexOf(attrValue) >= 0);
+          !value || (value && value.indexOf(attrValue) < 0) :
+          value && value.indexOf(attrValue) >= 0);
     });
   };
 
@@ -821,7 +819,7 @@ const Services = function(elementFinder) {
    * @property Services
    * @param $locator
    * @param {number} [timeout]
-   * @returns {!Thenable.<T>|!(promise.Thenable.<T>|WebElementPromise)|*}
+   * @returns {*}
    */
   this.waitForPresence = ($locator, timeout) => {
     const promise = _waitFor('presenceOf', $locator, timeout || this.DEFAULT_TIMEOUT);
@@ -837,7 +835,7 @@ const Services = function(elementFinder) {
    * @returns {*}
    */
   this.waitForStalenessOf = ($locator, timeout) => browser.wait(EC.or(
-    EC.stalenessOf($locator), EC.invisibilityOf($locator)), timeout || this.DEFAULT_TIMEOUT);
+      EC.stalenessOf($locator), EC.invisibilityOf($locator)), timeout || this.DEFAULT_TIMEOUT);
 
   /**
    * waitForNotPresence
@@ -845,10 +843,10 @@ const Services = function(elementFinder) {
    * @method Services.waitForNotPresence
    * @param $locator
    * @param {number} [timeout]
-   * @returns {!Thenable.<T>|!(promise.Thenable.<T>|WebElementPromise)|*}
+   * @returns {*}
    */
   this.waitForNotPresence = ($locator, timeout) => _waitFor('presenceOf', $locator, timeout ||
-    this.DEFAULT_TIMEOUT, true);
+      this.DEFAULT_TIMEOUT, true);
 
   /**
    * waitForAlert
@@ -858,8 +856,8 @@ const Services = function(elementFinder) {
    * @returns {*|promise.Promise<R>}
    */
   this.waitForAlert = timeout => browser.wait(EC.alertIsPresent(),
-    timeout || this.DEFAULT_TIMEOUT).then(condition =>
-    expect(condition).toBe(true));
+      timeout || this.DEFAULT_TIMEOUT).then(condition =>
+      expect(condition).toBe(true));
 
   /**
    * waitForClickable
@@ -867,7 +865,7 @@ const Services = function(elementFinder) {
    * @property Services
    * @param $locator
    * @param {number} [timeout]
-   * @returns {!Thenable.<T>|!(promise.Thenable.<T>|WebElementPromise)|*}
+   * @returns {*}
    */
   this.waitForClickable = ($locator, timeout) => {
     const promise = _waitFor('elementToBeClickable', $locator, timeout || this.DEFAULT_TIMEOUT);
@@ -881,14 +879,14 @@ const Services = function(elementFinder) {
    * @property Services
    * @param $locator
    * @param  [timeout]
-   * @returns {!Thenable.<T>|!(promise.Thenable.<T>|WebElementPromise)|*}
+   * @returns {*}
    */
   this.waitForDisplayed = ($locator, timeout) =>
-    this.waitForPresence($locator, timeout).then(() => {
-      this.highlightElement($locator);
-      expect($locator.isDisplayed()).toBeTruthy();
-      return $locator;
-    });
+      this.waitForPresence($locator, timeout).then(() => {
+        this.highlightElement($locator);
+        expect($locator.isDisplayed()).toBeTruthy();
+        return $locator;
+      });
 
   /**
    * waitForInvisibility
@@ -898,7 +896,7 @@ const Services = function(elementFinder) {
    * @returns {*}
    */
   this.waitForInvisibility = ($locator, timeout) => _waitFor('invisibilityOf',
-    $locator, timeout || this.DEFAULT_TIMEOUT);
+      $locator, timeout || this.DEFAULT_TIMEOUT);
 
   /**
    * executeCallback
@@ -917,10 +915,9 @@ const Services = function(elementFinder) {
    * executeCallbackPromise
    * @method Services.executeCallbackPromise
    * @property Services
-   * @param {!Thenable.<T>|!(promise.Thenable.<T>|WebElementPromise)} promise
+   * @param promise
    * @param {boolean} execute
-   * @param {function} [callback]
-   * @param {*} [*]
+   * @param callback
    * @returns {*}
    */
   this.executeCallbackPromise = function(promise, execute, callback) {

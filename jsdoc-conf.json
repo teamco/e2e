@@ -1,0 +1,39 @@
+{
+  "plugins": [
+    "plugins/markdown"
+  ],
+  "recurseDepth": 10,
+  "markdown": {
+    "parser": "gfm",
+    "hardwrap": true
+  },
+  "tags": {
+    "allowUnknownTags": true,
+    "dictionaries": ["jsdoc"]
+  },
+  "templates": {
+    "name": "AIA E2E Test framework",
+    "footerText": "Version 1.0.0",
+    "logo": {
+      "link": "https://github.com/Grafluxe/boxy-jsdoc-template"
+    }
+  },
+  "opts": {
+    "encoding": "utf8",
+    "private": true,
+    "recurse": true,
+    "package": "package.json",
+    "template": "./node_modules/boxy-jsdoc-template",
+    "destination": "./docs/"
+  },
+  "source": {
+    "include": [
+      "services",
+      "specs",
+      "package.json",
+      "README.md"
+    ],
+    "includePattern": ".js$",
+    "excludePattern": "(node_modules/|docs)"
+  }
+}

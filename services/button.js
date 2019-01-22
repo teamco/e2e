@@ -20,7 +20,7 @@ const Button = function() {
    * @property Button
    * @param $locator
    * @param {function} [callback]
-   * @returns {!Thenable.<T>|!(promise.Thenable.<T>|WebElementPromise)|*}
+   * @returns {!Thenable<R>}
    */
   this.press = ($locator, callback) =>
       s.e2e.waitForClickable($locator).then(() =>
