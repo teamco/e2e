@@ -192,7 +192,7 @@ const Services = function(elementFinder) {
     $locator.getAttribute('style').then(style => {
       if (typeof $locator.getWebElement !== 'function') {
         if (typeof $locator.getWebElements === 'function') {
-          // TODO (Tkachv): Array of elements
+          // TODO (teamco): Array of elements
         }
         return false;
       }
@@ -369,6 +369,12 @@ const Services = function(elementFinder) {
    * @type {Button}
    */
   this.button = require('./button');
+
+  /**
+   * @property Services
+   * @type {Checkbox}
+   */
+  this.checkbox = require('./checkbox');
 
   /**
    * @property Services
@@ -841,7 +847,7 @@ const Services = function(elementFinder) {
    * @returns {*}
    */
   this.waitForPresence = ($locator, timeout) => {
-    const promise = _waitFor('presenceOf', $locator, timeout || this.DEFAULT_TIMEOUT);
+    const promise = _waitFor.call(this, 'presenceOf', $locator, timeout || this.DEFAULT_TIMEOUT);
     this.highlightElement($locator);
     return promise;
   };
@@ -864,7 +870,7 @@ const Services = function(elementFinder) {
    * @param {number} [timeout]
    * @returns {*}
    */
-  this.waitForNotPresence = ($locator, timeout) => _waitFor('presenceOf', $locator, timeout ||
+  this.waitForNotPresence = ($locator, timeout) => _waitFor.call(this, 'presenceOf', $locator, timeout ||
       this.DEFAULT_TIMEOUT, true);
 
   /**
@@ -887,7 +893,7 @@ const Services = function(elementFinder) {
    * @returns {*}
    */
   this.waitForClickable = ($locator, timeout) => {
-    const promise = _waitFor('elementToBeClickable', $locator, timeout || this.DEFAULT_TIMEOUT);
+    const promise = _waitFor.call(this, 'elementToBeClickable', $locator, timeout || this.DEFAULT_TIMEOUT);
     this.highlightElement($locator);
     return promise;
   };
@@ -917,7 +923,7 @@ const Services = function(elementFinder) {
    * @param timeout
    * @returns {*}
    */
-  this.waitForInvisibility = ($locator, timeout) => _waitFor('invisibilityOf',
+  this.waitForInvisibility = ($locator, timeout) => _waitFor.call(this, 'invisibilityOf',
       $locator, timeout || this.DEFAULT_TIMEOUT);
 
   /**

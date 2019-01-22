@@ -1,5 +1,5 @@
 /**
- * Created by Tkachv on 3/22/2017.
+ * Created by teamco on 3/22/2017.
  */
 
 /*jshint esversion: 6 */
@@ -119,7 +119,7 @@ function _updateConfig(config, param, value) {
       }
       break;
     default:
-      // TODO (Tkachv): Do something
+      // TODO (teamco): Do something
       break;
   }
   return config;

@@ -1,5 +1,5 @@
 /**
- * Created by Tkachv on 5/17/2017.
+ * Created by teamco on 5/17/2017.
  */
 
 /**
@@ -14,16 +14,16 @@ describe('E2E tests', () => {
 
   global.s.preConfig({
     beforeAll() {
-      // TODO (Tkachv): Do something
+      // TODO (teamco): Do something
     },
     beforeEach() {
-      // TODO (Tkachv): Do something
+      // TODO (teamco): Do something
     },
     afterAll() {
-      // TODO (Tkachv): Do something
+      // TODO (teamco): Do something
     },
     afterEach() {
-      // TODO (Tkachv): Do something
+      // TODO (teamco): Do something
     }
   });
 
