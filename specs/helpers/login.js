@@ -33,7 +33,7 @@ function _get$locator(id) {
  */
 const negativeLogin = () => {
   it('Negative Login', async () => {
-
+    await get$user();
   });
 };
 
@@ -42,7 +42,7 @@ const negativeLogin = () => {
  */
 const positiveLogin = () => {
   it('Positive Login', async () => {
-
+    await s.getElementBy('css', '.user-image');
   });
 };
 
@@ -80,7 +80,7 @@ const fillLoginForm = (user, password) => {
  * @constant
  */
 const doLogin = () => {
-  it('Do login', async () => {
+  it('Submit login form', async () => {
     const $submit = await s.getElementBy('css', '#new_user button[type="submit"]');
     await s.button.press($submit);
   });
@@ -115,7 +115,6 @@ export const doLogout = (isSpec = true) => {
  * @param isPositive
  */
 export const login = (user, password, isPositive = true) => {
-  resetLogin();
   fillLoginForm(user, password);
   doLogin();
   if (isPositive) {
