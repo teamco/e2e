@@ -3,6 +3,7 @@
  */
 
 import {doLogout} from './helpers/login';
+import {navigateTo} from './helpers/general';
 
 /**
  * Simplify services
@@ -14,7 +15,7 @@ global.s = services.e2e;
 
 describe('E2E tests', () => {
 
-  global.s.preConfig({
+  s.preConfig({
     beforeAll() {
       // TODO (teamco): Do something
     },
@@ -22,7 +23,8 @@ describe('E2E tests', () => {
       // TODO (teamco): Do something
     },
     afterAll() {
-      console.log('Logout after all specs');
+      console.log('>>> Logout after all specs');
+      navigateTo('http://localhost:5000', 'AntHill', false);
       doLogout(false);
     },
     afterEach() {
