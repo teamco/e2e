@@ -2,6 +2,8 @@
  * Created by teamco on 5/17/2017.
  */
 
+import {doLogout} from './helpers/login';
+
 /**
  * Simplify services
  * @type {Services}
@@ -20,7 +22,7 @@ describe('E2E tests', () => {
       // TODO (teamco): Do something
     },
     afterAll() {
-      // TODO (teamco): Do something
+      doLogout(false);
     },
     afterEach() {
       // TODO (teamco): Do something

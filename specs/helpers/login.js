@@ -1,21 +1,47 @@
 /**
- * @constant
- * @param user
- * @param password
+ * @returns {*}
  */
-const negativeLogin = (user, password) => {
-  it(`Negative Login: ${user}:${password}`, async () => {
+function get$user() {
+  return _get$locator('user_email');
+}
+
+/**
+ * @returns {*}
+ */
+function get$password() {
+  return _get$locator('user_password');
+}
+
+/**
+ * @returns {*}
+ */
+function get$remember() {
+  return _get$locator('user_remember_me');
+}
+
+/**
+ * @param id
+ * @returns {*}
+ * @private
+ */
+function _get$locator(id) {
+  return s.getElementBy('id', id);
+}
+
+/**
+ * @constant
+ */
+const negativeLogin = () => {
+  it('Negative Login', async () => {
 
   });
 };
 
 /**
  * @constant
- * @param user
- * @param password
  */
-const positiveLogin = (user, password) => {
-  it(`Positive Login: ${user}:${password}`, async () => {
+const positiveLogin = () => {
+  it('Positive Login', async () => {
 
   });
 };
@@ -23,11 +49,14 @@ const positiveLogin = (user, password) => {
 /**
  * @constant
  */
-const resetLoginForm = async () => {
-  await fillLoginForm('user', 'password');
-  await it('Reset login form', async () => {
+const resetLoginForm = () => {
+  it('Reset login form', async () => {
     const $reset = await s.getElementBy('css', '#new_user button[type="reset"]');
     await s.button.press($reset);
+    const $user = await get$user();
+    const $password = await get$password();
+    expect($user.getText()).toBe('');
+    expect($password.getText()).toBe('');
   });
 };
 
@@ -35,13 +64,12 @@ const resetLoginForm = async () => {
  * @constant
  * @param user
  * @param password
- * @returns {Promise<void>}
  */
 const fillLoginForm = (user, password) => {
   it(`Fill login form data: ${user}:${password}`, async () => {
-    const $user = s.getElementBy('id', 'user_email');
-    const $password = s.getElementBy('id', 'user_password');
-    const $remember = await s.getElementBy('id', 'user_remember_me');
+    const $user = get$user();
+    const $password = get$password();
+    const $remember = await get$remember();
     await s.input.updateValue($user, user);
     await s.input.updateValue($password, password);
     await s.checkbox.toggle($remember);
@@ -52,7 +80,7 @@ const fillLoginForm = (user, password) => {
  * @constant
  */
 const doLogin = () => {
-  it('Fill login form data', async () => {
+  it('Do login', async () => {
     const $submit = await s.getElementBy('css', '#new_user button[type="submit"]');
     await s.button.press($submit);
   });
@@ -60,18 +88,47 @@ const doLogin = () => {
 
 /**
  * @export
+ * @constant
+ */
+export const doLogout = (isSpec = true) => {
+
+  /**
+   * private
+   * @returns {Promise<void>}
+   */
+  async function _spec() {
+    const $userInfo = await s.getElementBy('css', '.user-image');
+    await s.button.press($userInfo);
+    const $menu = await s.getElementBy('css', '.dropdown-menu.show');
+    const $signOut = await s.getElementInsideOfBy('a[href="/users/sign_out"]', $menu, 'Clickable');
+    await s.button.press($signOut);
+    await get$user();
+  }
+
+  isSpec ? it('Do logout', _spec) : _spec().then();
+};
+
+/**
+ * @export
  * @param user
  * @param password
  * @param isPositive
- * @returns {Promise<void>}
  */
-export const login = async (user, password, isPositive = true) => {
-  await resetLoginForm();
-  await fillLoginForm(user, password);
-  await doLogin();
+export const login = (user, password, isPositive = true) => {
+  resetLogin();
+  fillLoginForm(user, password);
+  doLogin();
   if (isPositive) {
-    await positiveLogin(user, password);
+    positiveLogin(user, password);
   } else {
-    await negativeLogin(user, password);
+    negativeLogin(user, password);
   }
+};
+
+/**
+ * @constant
+ */
+export const resetLogin = () => {
+  fillLoginForm('user', 'password');
+  resetLoginForm();
 };

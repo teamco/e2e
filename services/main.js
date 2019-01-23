@@ -37,23 +37,24 @@ function _executeFn(fn) {
 
 /**
  * @method _asyncDone
- * @param {Function} done
+ * @param {function} done
  * @param {string} type
  * @private
  */
 function _asyncDone(done, type) {
   setTimeout(() => {
     // eslint-disable-next-line no-console
-    console.log('Async', type);
+    // console.log('Async', type);
     done();
-  }, 500);
+  }, 200);
 }
 
 /**
  * Services
  * @constructor
  */
-const Services = function(elementFinder) {
+const Services = function() {
+
   /**
    * All keys
    * @type {IKey}
@@ -122,6 +123,7 @@ const Services = function(elementFinder) {
     afterAll(function(done) {
       global.c = this;
       _asyncDone(done, 'afterAll');
+      _executeFn(fn);
     });
   };
 
