@@ -1,4 +1,4 @@
-import {login, resetLogin} from '../../helpers/login';
+import {doLogout, login, resetLogin} from '../../helpers/login';
 import {navigateTo} from '../../helpers/general';
 
 describe('Login', () => {
@@ -8,5 +8,7 @@ describe('Login', () => {
   navigateTo('http://localhost:5000', 'AntHill');
   resetLogin();
   login('', '', false);
+  login('email@gmail.com', '1234567890');
+  doLogout();
   login('email@gmail.com', '1234567890');
 });

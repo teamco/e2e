@@ -22,6 +22,7 @@ describe('E2E tests', () => {
       // TODO (teamco): Do something
     },
     afterAll() {
+      console.log('Logout after all specs');
       doLogout(false);
     },
     afterEach() {
