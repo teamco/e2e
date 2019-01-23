@@ -3,9 +3,6 @@
  */
 
 describe('General', () => {
-
   s.preConfig();
-
-  require('./anthill/login.test');
-  require('./anthill/design.test');
+  require('./login/login.test');
 });
