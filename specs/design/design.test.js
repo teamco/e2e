@@ -6,7 +6,7 @@ describe('Design', () => {
 
   const baseUrl = s.specConfig.baseUrl;
 
-  navigateTo(baseUrl, title);
+  navigateTo(baseUrl, s.specConfig.title);
   login(s.specConfig.credentials.user, s.specConfig.credentials.password);
   navigateTo(`${baseUrl}/sites/shared/development`, s.specConfig.title);
 });
