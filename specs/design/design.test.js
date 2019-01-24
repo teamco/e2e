@@ -4,10 +4,9 @@ import {login} from '../helpers/login';
 describe('Design', () => {
   s.preConfig();
 
-  const baseUrl = 'http://localhost:5000';
-  const title = 'AntHill';
+  const baseUrl = s.specConfig.baseUrl;
 
   navigateTo(baseUrl, title);
-  login('email@gmail.com', '1234567890');
-  navigateTo(`${baseUrl}/sites/shared/development`, title);
+  login(s.specConfig.credentials.user, s.specConfig.credentials.password);
+  navigateTo(`${baseUrl}/sites/shared/development`, s.specConfig.title);
 });

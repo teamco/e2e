@@ -3,8 +3,8 @@ import {navigateTo} from '../../helpers/general';
 
 describe('Login', () => {
   s.preConfig();
-  navigateTo('http://localhost:5000', 'AntHill');
+  navigateTo(s.specConfig.baseUrl, s.specConfig.title);
   resetLogin();
   login('', '', false);
-  login('email@gmail.com', '1234567890');
+  login(s.specConfig.credentials.user, s.specConfig.credentials.password);
 });

@@ -15,6 +15,12 @@ global.s = services.e2e;
 
 describe('E2E tests', () => {
 
+  s.specConfig = {
+    baseUrl: 'http://localhost:5000',
+    title: 'AntHill',
+    credentials: {user: 'email@gmail.com', password: '1234567890'}
+  };
+
   s.preConfig({
     beforeAll() {
       // TODO (teamco): Do something
@@ -24,7 +30,7 @@ describe('E2E tests', () => {
     },
     afterAll() {
       console.log('>>> Logout after all specs');
-      navigateTo('http://localhost:5000', 'AntHill', false);
+      navigateTo(s.specConfig.baseUrl, s.specConfig.title, false);
       doLogout(false);
     },
     afterEach() {
