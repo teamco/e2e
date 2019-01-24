@@ -4,5 +4,9 @@
 
 describe('General', () => {
   s.preConfig();
-  require('./login/login.test');
+  describe('Authentication', () => {
+    s.preConfig();
+    require('./login/login.test');
+    require('./login/logout.test');
+  });
 });

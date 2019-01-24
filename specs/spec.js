@@ -33,4 +33,5 @@ describe('E2E tests', () => {
   });
 
   require('./general/general.spec');
+  require('./design/design.test');
 });
