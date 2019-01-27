@@ -72,7 +72,7 @@ function _updateConfig(config, param, value) {
           config.capabilities.platform = 'ANY';
           config.capabilities.version = '11';
           config.seleniumArgs =
-            ['-Dwebdriver.ie.driver=' + path.join('node_modules', 'protractor', 'selenium', 'IEDriverServer.exe')];
+              ['-Dwebdriver.ie.driver=' + path.join('node_modules', 'protractor', 'selenium', 'IEDriverServer.exe')];
         }
         if (value !== 'chrome' && value !== 'firefox') {
           config.directConnect = false;
@@ -96,10 +96,10 @@ function _updateConfig(config, param, value) {
       if (value === 'true' && headless && Array.isArray((headless[browser] || {}).args)) {
         if (browser === 'chrome') {
           config.capabilities.chromeOptions.args =
-            config.capabilities.chromeOptions.args.concat(headless[browser].args);
+              config.capabilities.chromeOptions.args.concat(headless[browser].args);
         } else if (browser === 'firefox') {
           config.capabilities['moz:firefoxOptions'].args =
-            config.capabilities['moz:firefoxOptions'].args.concat(headless[browser].args);
+              config.capabilities['moz:firefoxOptions'].args.concat(headless[browser].args);
         }
       }
       break;
@@ -172,9 +172,9 @@ const init = config => {
  *    shardTestFiles: boolean,
  *    maxInstances: number
  *   },
-  *  onPrepare: function(),
-  *  beforeLaunch: function(): void
-  * }}
+ *  onPrepare: function(),
+ *  beforeLaunch: function(): void
+ * }}
  */
 const config = {
   params: {
@@ -228,7 +228,6 @@ const config = {
     require('babel-register');
     require('babel-core/register')({presets: ['env']});
     jasmine.getEnv().addReporter(prettyReporter);
-    // s.e2e.browser.disableSynchronization();
   },
   beforeLaunch: () => prettyReporter.startReporter()
 };

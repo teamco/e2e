@@ -54,21 +54,21 @@ const Browser = function() {
    * @property Browser
    * @param {boolean} ignore
    */
-  this.ignoreSynchronization = ignore => browser.waitForAngularEnabled(ignore);
+  this.synchronization = async ignore => await browser.waitForAngularEnabled(ignore);
 
   /**
    * enableSynchronization
    * @method enableSynchronization
    * @property Browser
    */
-  this.enableSynchronization = () => this.ignoreSynchronization(true);
+  this.enableSynchronization = async () => await this.synchronization(true);
 
   /**
    * disableSynchronization
    * @method disableSynchronization
    * @property Browser
    */
-  this.disableSynchronization = () => this.ignoreSynchronization(false);
+  this.disableSynchronization = async () => await this.synchronization(false);
 
   /**
    * wait
@@ -95,9 +95,9 @@ const Browser = function() {
    * const $createButton = await s.getElementBy('css', '._t_create');
    * await s.browser.clickSimulation($createButton);
    */
-  this.clickSimulation = async $locator => {
+  this.clickSimulation = async $locator => {
     this.scrollToElement($locator);
-    await s.e2e.waitForDisplayed($locator);
+    await s.e2e.waitForDisplayed($locator);
     this.mouseMove($locator);
     this.mouseDown($locator);
     this.mouseUp(true);
@@ -204,7 +204,11 @@ const Browser = function() {
    * @returns {promise.Promise<void>|promise.Thenable}
    */
   this.mouseMoveOffset = ($locator, opts, perform) => {
-    const action = this.getAction().mouseMove($locator, {x: opts.x, y: opts.y});
+    const action = this.getAction().
+        mouseMove($locator, {
+          x: opts.x,
+          y: opts.y
+        });
     return perform ? action.perform() : action;
   };
 
@@ -252,7 +256,7 @@ const Browser = function() {
    * s.browser.clickOnElement($pictureExternalTitle);
    */
   this.clickOnElement = ($locator, callback) =>
-    this.mouseMove($locator).then(() => this.mouseClick('left').then(() => s.e2e.executeCallback(callback)));
+      this.mouseMove($locator).then(() => this.mouseClick('left').then(() => s.e2e.executeCallback(callback)));
 
   /**
    * scrollToElement
@@ -264,7 +268,7 @@ const Browser = function() {
    * await s.browser.scrollToElement($locator);
    */
   this.scrollToElement = $locator => browser.executeScript('arguments[0].scrollIntoView();',
-    $locator.getWebElement()).then(() => s.e2e.waitForDisplayed($locator));
+      $locator.getWebElement()).then(() => s.e2e.waitForDisplayed($locator));
 
   /**
    * scrollElement
@@ -278,7 +282,7 @@ const Browser = function() {
    * await s.browser.scrollElement($tabMonitoring);
    */
   this.scrollElement = ($locator, scrollTo) => browser.executeScript('arguments[0].scrollTop=arguments[1];',
-    $locator.getWebElement(), scrollTo || 0);
+      $locator.getWebElement(), scrollTo || 0);
 
   /**
    * canvasDragNDrop
@@ -297,7 +301,14 @@ const Browser = function() {
     const action = this.mouseMoveOffset($locator, {
       x: opts.fromX,
       y: opts.fromY
-    }).mouseDown().mouseMove({x: x, y: y}).mouseUp().perform();
+    }).
+        mouseDown().
+        mouseMove({
+          x: x,
+          y: y
+        }).
+        mouseUp().
+        perform();
     this.wait(500);
     return action;
   };
@@ -335,7 +346,7 @@ const Browser = function() {
    * @returns {promise.Promise<void>}
    */
   this.elementScrollHeight = $locator => browser.executeScript('return arguments[0].scrollTop;',
-    $locator.getWebElement());
+      $locator.getWebElement());
 
   /**
    * @method Browser.isFullScreen
@@ -375,7 +386,7 @@ const Browser = function() {
     opts.x = opts.x || 0;
     opts.y = opts.y || 0;
     $locator.then(() => s.e2e.browser.getAction().dragAndDrop($locator, opts).perform().then(() =>
-      s.e2e.executeCallback(callback)));
+        s.e2e.executeCallback(callback)));
   };
 
   /**
@@ -387,10 +398,10 @@ const Browser = function() {
    * @param {function} [callback]
    */
   this.jQueryUIDropTo = ($locator, $drop, callback) =>
-    $drop.then(() => $locator.then(() =>
-      s.e2e.browser.getAction().dragAndDrop($locator,
-        $drop).perform().then(() =>
-        s.e2e.executeCallback(callback))));
+      $drop.then(() => $locator.then(() =>
+          s.e2e.browser.getAction().dragAndDrop($locator,
+              $drop).perform().then(() =>
+              s.e2e.executeCallback(callback))));
 
   /**
    * dropHtml5To
@@ -401,7 +412,7 @@ const Browser = function() {
    * @param {function} [callback]
    */
   this.dropHtml5To = ($locator, $drop, callback) =>
-    browser.executeScript(require('html-dnd').code, $locator, $drop).then(() => s.e2e.executeCallback(callback));
+      browser.executeScript(require('html-dnd').code, $locator, $drop).then(() => s.e2e.executeCallback(callback));
 
   /**
    * @method Browser.handleMouseTracker

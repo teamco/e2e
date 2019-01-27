@@ -67,7 +67,7 @@ const Services = function() {
    */
   this.beforeAll = fn => {
     const that = this;
-    beforeAll(function(done) {
+    beforeAll(done => {
 
       /**
        * <c> - Context.
@@ -77,13 +77,13 @@ const Services = function() {
        * //     c[<namespace>] = {<structure>};
        * //   });
        */
-      global['c'] = this;
+      global['c'] = that;
       that.browser.maximize();
       that.browser.deleteAllCookies();
-      that.browser.disableSynchronization();
-
-      _asyncDone(done, 'beforeAll');
-      _executeFn(fn);
+      that.browser.disableSynchronization().then(() => {
+        _asyncDone(done, 'beforeAll');
+        _executeFn(fn);
+      });
     });
   };
 
@@ -93,11 +93,11 @@ const Services = function() {
    */
   this.beforeEach = fn => {
     const that = this;
-    beforeEach(function(done) {
-      global.c = this;
-      _asyncDone(done, 'beforeEach');
+    beforeEach(done => {
+      global.c = that;
       that.activeElement();
       jasmine.DEFAULT_TIMEOUT_INTERVAL = 720000;
+      _asyncDone(done, 'beforeEach');
       _executeFn(fn);
     });
   };
@@ -107,8 +107,9 @@ const Services = function() {
    * @param [fn]
    */
   this.afterEach = fn => {
-    afterEach(function(done) {
-      global.c = this;
+    const that = this;
+    afterEach(done => {
+      global.c = that;
       _asyncDone(done, 'afterEach');
       jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
       _executeFn(fn);
@@ -120,8 +121,9 @@ const Services = function() {
    * @param fn
    */
   this.afterAll = fn => {
-    afterAll(function(done) {
-      global.c = this;
+    const that = this;
+    afterAll(done => {
+      global.c = that;
       _asyncDone(done, 'afterAll');
       _executeFn(fn);
     });
@@ -341,10 +343,12 @@ const Services = function() {
     if (_not) {
       waitOn = EC.not(waitOn);
     }
+    //return this.browser.disableSynchronization().then(() => {
     return browser.wait(waitOn, timeout).then(condition => {
       expect(condition).toBeTruthy();
       return $locator;
     });
+    //});
   }
 
   /**
@@ -767,7 +771,10 @@ const Services = function() {
    */
   this.waitForClass =
       async ($locator, desiredClass, {present = true, exact = true, timeout = this.DEFAULT_TIMEOUT} = {}) =>
-          this.waitForClassAttr($locator, this.getClassNameDetector(desiredClass, {present, exact}), timeout);
+          this.waitForClassAttr($locator, this.getClassNameDetector(desiredClass, {
+            present,
+            exact
+          }), timeout);
 
   /**
    * validateText
