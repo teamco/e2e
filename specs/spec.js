@@ -2,9 +2,6 @@
  * Created by teamco on 5/17/2017.
  */
 
-import {doLogout} from './helpers/login';
-import {navigateTo} from './helpers/general';
-
 /**
  * Simplify services
  * @type {Services}
@@ -30,8 +27,8 @@ describe('E2E tests', () => {
     },
     afterAll() {
       console.log('>>> Logout after all specs');
-      navigateTo(s.specConfig.baseUrl, s.specConfig.title, false);
-      doLogout(false);
+      // navigateTo(s.specConfig.baseUrl, s.specConfig.title, false);
+      // doLogout(false);
     },
     afterEach() {
       // TODO (teamco): Do something
@@ -39,5 +36,5 @@ describe('E2E tests', () => {
   });
 
   require('./general/general.spec');
-  require('./design/design.test');
+  //require('./design/design.test');
 });

@@ -1,3 +1,5 @@
+import {openUserMenu, selectUserMenuItem} from './userMenu';
+
 /**
  * @returns {*}
  */
@@ -91,21 +93,9 @@ const doLogin = () => {
  * @constant
  */
 export const doLogout = (isSpec = true) => {
-
-  /**
-   * private
-   * @returns {Promise<void>}
-   */
-  async function _spec() {
-    const $userInfo = await s.getElementBy('css', '.user-image');
-    await s.button.press($userInfo);
-    const $menu = await s.getElementBy('css', '.dropdown-menu.show');
-    const $signOut = await s.getElementInsideOfBy('a[href="/users/sign_out"]', $menu, 'Clickable');
-    await s.button.press($signOut);
-    await get$user();
-  }
-
-  isSpec ? it('Do logout', _spec) : _spec().then();
+  openUserMenu(isSpec);
+  selectUserMenuItem('a[href="/users/sign_out"]', isSpec);
+  get$user();
 };
 
 /**

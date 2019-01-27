@@ -31,6 +31,7 @@
   "author": "Vladimir Tkach at Amdocs",
   "license": "ISC",
   "dependencies": {
+    "@rails/webpacker": "^4.0.0-rc.7",
     "chai": "*",
     "colors": "*",
     "eslint-plugin-protractor": "^1.41.0",

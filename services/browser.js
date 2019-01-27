@@ -54,21 +54,21 @@ const Browser = function() {
    * @property Browser
    * @param {boolean} ignore
    */
-  this.ignoreSynchronization = ignore => browser.ignoreSynchronization = ignore;
+  this.ignoreSynchronization = ignore => browser.waitForAngularEnabled(ignore);
 
   /**
    * enableSynchronization
    * @method enableSynchronization
    * @property Browser
    */
-  this.enableSynchronization = () => s.e2e.browser.ignoreSynchronization(false);
+  this.enableSynchronization = () => this.ignoreSynchronization(true);
 
   /**
    * disableSynchronization
    * @method disableSynchronization
    * @property Browser
    */
-  this.disableSynchronization = () => s.e2e.browser.ignoreSynchronization(true);
+  this.disableSynchronization = () => this.ignoreSynchronization(false);
 
   /**
    * wait
