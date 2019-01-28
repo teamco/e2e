@@ -18,6 +18,6 @@ export const navigateTo = (url, title, isSpec = true) => {
 export const disableAngular = (disable = true) => {
   it(`Disable Synchronization: ${disable}`, async () => {
     await s.browser.synchronization(!disable);
-    expect(browser.ignoreSynchronization).toBeTruthy();
+    expect(browser.ignoreSynchronization).toBe(disable);
   });
 };
