@@ -20,7 +20,7 @@ export const openUserMenu = (isSpec = true) => {
  * @constant
  * @param css
  * @param isSpec
- * @returns {_spec}
+ * @returns {Promise<void>}
  */
 export const selectUserMenuItem = (css, isSpec = true) => {
 
@@ -35,7 +35,7 @@ export const selectUserMenuItem = (css, isSpec = true) => {
   }
 
   if (isSpec) {
-    return _spec;
+    return _spec();
   }
 
   _spec().then();
