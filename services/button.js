@@ -3,12 +3,6 @@
  */
 
 /**
- * Define e2e
- * @type {{e2e: Object}}
- */
-const s = require('./main.js');
-
-/**
  * Button
  * @constructor
  */
@@ -26,9 +20,9 @@ const Button = function() {
    * await s.button.press($import);
    */
   this.press = ($locator, callback) =>
-      s.e2e.waitForClickable($locator).then(() =>
-          s.e2e.executeCallbackPromise(
-              s.e2e.browser.clickOnElement($locator), false, callback));
+      s.waitForClickable($locator).then(() =>
+          s.executeCallbackPromise(
+              s.browser.clickOnElement($locator), false, callback));
 
   /**
    * isDisabled
@@ -53,7 +47,7 @@ const Button = function() {
       expect($locator.getAttribute('disabled')).toBe(condition);
     }
 
-    s.e2e.isPromise($locator) ?
+    s.isPromise($locator) ?
         $locator.then($locator => _validate($locator, disabled)) :
         _validate($locator, disabled);
   };

@@ -3,12 +3,6 @@
  */
 
 /**
- * Define e2e
- * @type {{e2e: Object}}
- */
-const s = require('./main.js');
-
-/**
  * Checkbox
  * @constructor
  */
@@ -19,7 +13,23 @@ const Checkbox = function() {
    * @param $locator
    * @returns {Promise<void>}
    */
-  this.toggle = async $locator => await s.e2e.browser.clickOnElement($locator);
+  this.toggle = async $locator => await s.browser.clickOnElement($locator);
+
+  /**
+   * @memberOf Checkbox
+   * @param $locator
+   * @param check
+   * @returns {Promise<boolean>}
+   */
+  this.check = async ($locator, check = true) => {
+    let checked = await $locator.isSelected();
+    if ((checked && check) || (!checked && !check)) {
+      return false;
+    }
+    s.checkbox.toggle($locator);
+    checked = await $locator.isSelected();
+    expect(checked).toBe(check);
+  };
 };
 
 module.exports = new Checkbox();

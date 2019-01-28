@@ -3,12 +3,6 @@
  */
 
 /**
- * Define e2e
- * @type {{e2e: Object}}
- */
-const s = require('./main.js');
-
-/**
  * Browser
  * @constructor
  */
@@ -97,7 +91,7 @@ const Browser = function() {
    */
   this.clickSimulation = async $locator => {
     this.scrollToElement($locator);
-    await s.e2e.waitForDisplayed($locator);
+    await s.waitForDisplayed($locator);
     this.mouseMove($locator);
     this.mouseDown($locator);
     this.mouseUp(true);
@@ -116,9 +110,9 @@ const Browser = function() {
     const action = this.getAction()[type]($locator);
     if (typeof $locator === 'number') {
       // In case of mouse click
-      $locator = s.e2e.activeElement();
+      $locator = s.activeElement();
     }
-    s.e2e.mouseTracker($locator, type);
+    s.mouseTracker($locator, type);
     return perform ? action.perform() : action;
   };
 
@@ -237,7 +231,7 @@ const Browser = function() {
    * @param {string} [text]
    */
   this.handleConfirmation = (confirm, text) => {
-    s.e2e.waitForAlert().then(() => {
+    s.waitForAlert().then(() => {
       const dialog = browser.switchTo().alert();
       expect(dialog.getText()).toMatch(text || 'Unsaved changes will be lost. Do you wish to continue?');
       confirm ? dialog.accept() : dialog.dismiss();
@@ -256,7 +250,7 @@ const Browser = function() {
    * s.browser.clickOnElement($pictureExternalTitle);
    */
   this.clickOnElement = ($locator, callback) =>
-      this.mouseMove($locator).then(() => this.mouseClick('left').then(() => s.e2e.executeCallback(callback)));
+      this.mouseMove($locator).then(() => this.mouseClick('left').then(() => s.executeCallback(callback)));
 
   /**
    * scrollToElement
@@ -268,7 +262,7 @@ const Browser = function() {
    * await s.browser.scrollToElement($locator);
    */
   this.scrollToElement = $locator => browser.executeScript('arguments[0].scrollIntoView();',
-      $locator.getWebElement()).then(() => s.e2e.waitForDisplayed($locator));
+      $locator.getWebElement()).then(() => s.waitForDisplayed($locator));
 
   /**
    * scrollElement
@@ -325,7 +319,7 @@ const Browser = function() {
     opts = opts || {};
     opts.fromX = opts.fromX || 50;
     opts.fromY = opts.fromY || 50;
-    s.e2e.cursorTracker({
+    s.cursorTracker({
       x: opts.fromX,
       y: opts.fromY,
       container: '.tab-content'
@@ -334,7 +328,7 @@ const Browser = function() {
       x: opts.fromX,
       y: opts.fromY
     }).doubleClick().perform();
-    s.e2e.cursorTracker(false);
+    s.cursorTracker(false);
     return dblClick;
   };
 
@@ -385,8 +379,8 @@ const Browser = function() {
     opts = opts || {};
     opts.x = opts.x || 0;
     opts.y = opts.y || 0;
-    $locator.then(() => s.e2e.browser.getAction().dragAndDrop($locator, opts).perform().then(() =>
-        s.e2e.executeCallback(callback)));
+    $locator.then(() => s.browser.getAction().dragAndDrop($locator, opts).perform().then(() =>
+        s.executeCallback(callback)));
   };
 
   /**
@@ -399,9 +393,9 @@ const Browser = function() {
    */
   this.jQueryUIDropTo = ($locator, $drop, callback) =>
       $drop.then(() => $locator.then(() =>
-          s.e2e.browser.getAction().dragAndDrop($locator,
+          s.browser.getAction().dragAndDrop($locator,
               $drop).perform().then(() =>
-              s.e2e.executeCallback(callback))));
+              s.executeCallback(callback))));
 
   /**
    * dropHtml5To
@@ -412,7 +406,7 @@ const Browser = function() {
    * @param {function} [callback]
    */
   this.dropHtml5To = ($locator, $drop, callback) =>
-      browser.executeScript(require('html-dnd').code, $locator, $drop).then(() => s.e2e.executeCallback(callback));
+      browser.executeScript(require('html-dnd').code, $locator, $drop).then(() => s.executeCallback(callback));
 
   /**
    * @method Browser.handleMouseTracker
@@ -423,12 +417,12 @@ const Browser = function() {
    * @param {number} [wait]
    * @returns {promise.Promise<any>}
    */
-  this.handleMouseTracker = (x, y, container, wait) => s.e2e.cursorTracker({
+  this.handleMouseTracker = (x, y, container, wait) => s.cursorTracker({
     x: x,
     y: y,
     container: container || 'body'
   }).then(() => {
-    s.e2e.cursorTracker(false);
+    s.cursorTracker(false);
     this.wait(wait || 2000);
   });
 

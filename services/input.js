@@ -3,12 +3,6 @@
  */
 
 /**
- * Define e2e
- * @type {{e2e: Object}}
- */
-const services = require('./main.js');
-
-/**
  * Input
  * @constructor
  */
@@ -61,7 +55,7 @@ const Input = function() {
         });
       }
 
-      services.e2e.browser.clickOnElement($locator, () => {
+      s.browser.clickOnElement($locator, () => {
         value ? $locator.sendKeys(value).then(_checkValue) : $locator.clear().then(_checkValue);
       });
     });
@@ -100,7 +94,7 @@ const Input = function() {
       expect(text).toEqual(value);
     };
 
-    await services.e2e.browser.clickOnElement($locator, async () => {
+    await s.browser.clickOnElement($locator, async () => {
       if (value) {
         await $locator.sendKeys(value);
       } else {

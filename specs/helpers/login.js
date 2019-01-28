@@ -74,7 +74,7 @@ const fillLoginForm = (user, password) => {
     const $remember = await get$remember();
     await s.input.updateValue($user, user);
     await s.input.updateValue($password, password);
-    await s.checkbox.toggle($remember);
+    await s.checkbox.check($remember);
   });
 };
 
