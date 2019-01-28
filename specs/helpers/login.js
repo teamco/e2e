@@ -109,11 +109,7 @@ export const doLogout = (isSpec = true) => {
 export const login = (user, password, isPositive = true) => {
   fillLoginForm(user, password);
   doLogin();
-  if (isPositive) {
-    positiveLogin(user, password);
-  } else {
-    negativeLogin(user, password);
-  }
+  isPositive ? positiveLogin() : negativeLogin();
 };
 
 /**
