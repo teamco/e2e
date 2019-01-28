@@ -1,4 +1,4 @@
-# AIA E2E Test framework
+# E2E Test framework
 ## Dependencies: [Selenium](https://www.seleniumhq.org/), [Protractor](https://www.protractortest.org/#/) and [Webdriver manager](https://github.com/bonigarcia/webdrivermanager).
 
 ## Pre-install
