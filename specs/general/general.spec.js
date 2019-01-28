@@ -7,6 +7,6 @@ describe('General', () => {
   describe('Authentication', () => {
     s.preConfig();
     require('./login/login.test');
-    // require('./login/logout.test');
+    require('./login/logout.test');
   });
 });

@@ -13,13 +13,14 @@ export const openUserMenu = (isSpec = true) => {
     await s.button.press($userInfo);
   }
 
-  isSpec ? it('Open user menu', async () => _spec) : _spec().then();
+  isSpec ? it('Open user menu', async () => await _spec()) : _spec().then();
 };
 
 /**
  * @constant
  * @param css
  * @param isSpec
+ * @returns {_spec}
  */
 export const selectUserMenuItem = (css, isSpec = true) => {
 
@@ -33,5 +34,9 @@ export const selectUserMenuItem = (css, isSpec = true) => {
     await s.button.press($item);
   }
 
-  isSpec ? it('Select user menu item', async () => _spec) : _spec().then();
+  if (isSpec) {
+    return _spec;
+  }
+
+  _spec().then();
 };

@@ -94,8 +94,10 @@ const doLogin = () => {
  */
 export const doLogout = (isSpec = true) => {
   openUserMenu(isSpec);
-  selectUserMenuItem('a[href="/users/sign_out"]', isSpec);
-  get$user();
+  it('Do logout', async () => {
+    await selectUserMenuItem('a[href="/users/sign_out"]', isSpec)();
+    await get$user();
+  });
 };
 
 /**

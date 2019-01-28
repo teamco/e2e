@@ -6,5 +6,5 @@ describe('Login', () => {
   navigateTo(s.specConfig.baseUrl, s.specConfig.title);
   resetLogin();
   login('', '', false);
-  // login(s.specConfig.credentials.user, s.specConfig.credentials.password);
+  login(s.specConfig.credentials.user, s.specConfig.credentials.password);
 });
