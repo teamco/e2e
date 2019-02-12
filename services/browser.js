@@ -138,6 +138,12 @@ const Browser = function() {
    */
   this.getTitle = url => browser.get(url).then(() => browser.getTitle());
 
+  // function getTitle(url) {
+  //   return browser.get(url).then(function(){
+  //     return browser.getTitle();
+  //   })
+  // }
+
   /**
    * validateTitle
    * @method validateTitle

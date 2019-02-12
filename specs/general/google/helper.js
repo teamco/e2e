@@ -12,7 +12,7 @@
  */
 export const navigateTo = (url, title) => {
   it(`Navigate to: ${url}`, async () => {
-    s.browser.validateTitle(url, title);
+    await s.browser.validateTitle(url, title);
   });
 };
 
