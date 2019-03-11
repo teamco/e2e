@@ -26,7 +26,7 @@ const Checkbox = function() {
     if ((checked && check) || (!checked && !check)) {
       return false;
     }
-    s.checkbox.toggle($locator);
+    LibCss.toggle($locator);
     checked = await $locator.isSelected();
     expect(checked).toBe(check);
   };
