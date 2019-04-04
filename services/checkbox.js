@@ -2,6 +2,8 @@
  * Created by tkachv on 5/15/2017.
  */
 
+import {LibCss} from 'js/modules/base/Css';
+
 /**
  * Checkbox
  * @constructor
