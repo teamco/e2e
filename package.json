@@ -7,7 +7,7 @@
     "preinstall": "node -e \"if(process.env.npm_execpath.indexOf('yarn') === -1) throw new Error('You must use Yarn to install, not NPM')\"",
     "postinstall": "",
     "doc": "node_modules/.bin/jsdoc -c jsdoc-conf.json",
-    "selenium-update": "./node_modules/.bin/webdriver-manager update --ignore_ssl --gecko=false",
+    "selenium-update": "./node_modules/.bin/webdriver-manager update --ignore_ssl --gecko=false --versions.chrome=77.0.3865.90",
     "selenium-start": "./node_modules/.bin/webdriver-manager start",
     "e2e": "./node_modules/.bin/protractor conf.js",
     "e2e-headless": "./node_modules/.bin/protractor conf.js --params.headless=true",
