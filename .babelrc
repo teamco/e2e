@@ -1,13 +1,54 @@
 {
   "presets": [
-    [ "env", {
-      "modules": false,
-      "useBuiltIns": true,
-      "debug": false
-    }],
-    "stage-0"
+    [
+      "@babel/preset-env",
+      {
+        "modules": "auto",
+        "useBuiltIns": "usage",
+        "corejs": 3,
+        "loose": true,
+        "debug": false,
+        "forceAllTransforms": true,
+        "targets": {
+          "browsers": [
+            "last 2 versions",
+            "not ie > 0",
+            "not Android > 0"
+          ]
+        }
+      }
+    ]
   ],
   "plugins": [
-    "transform-runtime"
+    "@babel/plugin-syntax-dynamic-import",
+    "dynamic-import-node",
+    "css-modules-transform",
+    "@babel/plugin-transform-async-to-generator",
+    "@babel/plugin-proposal-object-rest-spread",
+    "@babel/plugin-proposal-optional-chaining",
+    "@babel/plugin-transform-computed-properties",
+    "@babel/plugin-transform-runtime",
+    [
+      "@babel/plugin-proposal-class-properties",
+      {
+        "spec": true,
+        "loose": true
+      }
+    ],
+    [
+      "module-resolver",
+      {
+        "root": [
+          "../../app/javascript/packs/"
+        ],
+        "alias": {
+          "app": "../../",
+          "js": "../../app/javascript/packs/",
+          "lib": "../../app/javascript/packs/lib/",
+          "config": "../../app/javascript/packs/core/config/",
+          "test": "../../test/unit/"
+        }
+      }
+    ]
   ]
 }
